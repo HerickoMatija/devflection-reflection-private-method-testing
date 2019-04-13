@@ -83,6 +83,15 @@ public class PrivateMethodClassTest {
         }
     }
 
+    /**
+     * This method takes a class, method name and the method arguments and tries to make the method in this class public
+     * so it can be executed.
+     *
+     * @param clazz Class that contains the given method
+     * @param methodName Method name of the method we want to make public
+     * @param arguments Arguments that the method takes
+     * @return An optional containing the method if the method was found or Optional.empty() if the method was not found
+     */
     private Optional<Method> makeMethodAccessible(Class<?> clazz, String methodName, Class<?>... arguments) {
         try {
             Method method = clazz.getDeclaredMethod(methodName, arguments);
@@ -94,6 +103,16 @@ public class PrivateMethodClassTest {
         return Optional.empty();
     }
 
+    /**
+     * This method tries to execute the given method and then cast and return the result of the method.
+     *
+     * @param method Method that we want to execute
+     * @param resultClassType Class to which we cast the result of the method to
+     * @param targetObject Instance of the class containing the method on which we will execute the method
+     * @param methodArgs Arguments of the method we want to execute
+     * @param <T> Type to which we want to cast the result of the method to
+     * @return Returns the result of the method cast to the given resultClassType or null if there was an exception
+     */
     private <T> T invokeMethod(Method method, Class<T> resultClassType, Object targetObject, Object... methodArgs) {
         try {
             Object result = method.invoke(targetObject, methodArgs);
